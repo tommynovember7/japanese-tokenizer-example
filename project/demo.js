@@ -28,7 +28,7 @@ const generateLinks = (segments, tags = []) => {
     }
 
     const currentSegment = segments[i];
-    tags.filter((tag) => tag).map((tag, tagIndex) => {
+    tags.map((tag, tagIndex) => {
       if (currentSegment === tag[0]) {
         segments[i] = markup(tag);
         delete (tags[tagIndex]);

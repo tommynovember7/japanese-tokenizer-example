@@ -1,7 +1,8 @@
 const TinySegmenter = require('tiny-segmenter');
 const {generateLinks} = require('./demo');
 
-describe('TinySegmenter', () => {
+describe('TinySegmenter',
+() => {
   let text;
   let tagNames;
 
