@@ -13,7 +13,6 @@ const createLink = (tag, segment) => `<a href="${tag[1]}">${segment}</a>`;
  *
  * tagNames = [
  *   ['ココ・シャネル', '/tag/coco-chanel'],
- *   ['シャネルスーツ', '/tag/chanel-suits'],
  *   ['シャネル', '/tag/chanel']
  * ];
  *
