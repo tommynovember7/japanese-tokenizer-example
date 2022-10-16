@@ -2,7 +2,7 @@
   "name": "tiny-segmenter-demo",
   "version": "0.0.1",
   "description": "example code to explain how the tiny-segmenter works",
-  "main": "demo.js",
+  "main": "src/linkAugogen/demo.js",
   "engines": {
     "node": "^16.17.1",
     "npm": "^8.19.2"
@@ -27,6 +27,7 @@
     "prettier": "^2.7.1"
   },
   "dependencies": {
+    "kuromoji": "^0.1.2",
     "tiny-segmenter": "^0.2.0"
   }
 }
