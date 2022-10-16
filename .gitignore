@@ -4,4 +4,4 @@
 .idea
 docker-compose.yaml.dist
 docker/.volumes/ssh
-project/node_modules
+node_modules
