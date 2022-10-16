@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  npm:
+    container_name: "kuromoji-install"
+    build:
+      context: docker/kuromoji
+      dockerfile: Dockerfile
+    environment:
+      - NPM_TOKEN=${NPM_TOKEN}
+    volumes:
+      - "./docker/.volumes/ssh:/root/.ssh:delegated"
+      - "./docker/.volumes/npm:/root/.npm:delegated"
+      - "./kuromoji:/kuromoji:delegated"
+    working_dir: /kuromoji
+    entrypoint: ["npm"]
+
+  build-dict:
+    container_name: "kuromoji-build-dict"
+    build:
+      context: docker/kuromoji
+      dockerfile: Dockerfile
+    environment:
+      - NPM_TOKEN=${NPM_TOKEN}
+    volumes:
+      - "./docker/.volumes/ssh:/root/.ssh:delegated"
+      - "./docker/.volumes/npm:/root/.npm:delegated"
+      - "./kuromoji:/kuromoji:delegated"
+      - "./project:/project:delegated"
+      - "./docker/kuromoji/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:cached"
+    working_dir: /kuromoji
+    entrypoint: ["/usr/local/bin/docker-entrypoint.sh"]
