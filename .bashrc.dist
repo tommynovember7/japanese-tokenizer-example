@@ -1,0 +1,22 @@
+export PATH="./docker/bin:../docker/bin:../../docker/bin:$PATH"
+export PROJECT_ROOT="$PWD"
+source "${PROJECT_ROOT}/docker/.env"
+
+_exec() {
+  [[ -z "$2" ]] && docker exec -it "$1" bash \
+  || docker exec -it "$1" "$2"
+}
+alias _build="docker compose build --force-rm --pull --no-cache"
+alias _ps="docker compose ps"
+alias _run="docker compose run --rm"
+alias _start="docker compose start"
+alias _stop="docker compose stop"
+alias _up="docker compose up --detach --force-recreate --remove-orphans"
+alias _down="docker compose down --remove-orphans"
+alias _restart="docker compose restart"
+alias _no-start="docker compose up --no-start --force-recreate --remove-orphans"
+
+alias node='docker run --rm -ti --entrypoint node -e "NPM_TOKEN=${NPM_TOKEN}" -v "${PROJECT_ROOT}/docker/.volumes/ssh:/root/.ssh:delegated" -v "${PROJECT_ROOT}/docker/.volumes/npm:/root/.npm:delegated" -v "$(pwd):/project:delegated" -w /project tommynovember7/node-lts:latest'
+alias npm='docker run  --rm -ti --entrypoint npm  -e "NPM_TOKEN=${NPM_TOKEN}" -v "${PROJECT_ROOT}/docker/.volumes/ssh:/root/.ssh:delegated" -v "${PROJECT_ROOT}/docker/.volumes/npm:/root/.npm:delegated" -v "$(pwd):/project:delegated" -w /project tommynovember7/node-lts:latest'
+alias npx='docker run  --rm -ti --entrypoint npx  -e "NPM_TOKEN=${NPM_TOKEN}" -v "${PROJECT_ROOT}/docker/.volumes/ssh:/root/.ssh:delegated" -v "${PROJECT_ROOT}/docker/.volumes/npm:/root/.npm:delegated" -v "$(pwd):/project:delegated" -w /project tommynovember7/node-lts:latest'
+alias ncu='docker run  --rm -ti --entrypoint ncu  -e "NPM_TOKEN=${NPM_TOKEN}" -v "${PROJECT_ROOT}/docker/.volumes/ssh:/root/.ssh:delegated" -v "${PROJECT_ROOT}/docker/.volumes/npm:/root/.npm:delegated" -v "$(pwd):/project:delegated" -w /project tommynovember7/node-lts:latest'
