@@ -3,5 +3,4 @@
 .env
 .idea
 docker-compose.yaml.dist
-docker/.volumes/ssh
 node_modules
