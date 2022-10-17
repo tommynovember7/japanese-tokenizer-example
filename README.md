@@ -46,9 +46,9 @@ It shows that we should improve the dictionary when facing unrecognisable words.
 
 ### Conclusion
 
-Website Tags are growing day by day and continuously incorporating new words. To expect better performance from a tokeniser, we must constantly improve its dictionary. I think we might have to use Kuromoji to generate links to Tags automatically.
+Website Tags are growing day by day and continuously incorporating new words. To expect better performance from a tokeniser, we must constantly improve its dictionary. I think we might have to use ***Kuromoji*** to generate links to Tags automatically.
 
-A possible improvement strategy is that we should continuously update the Kuromoji dictionary to add newly entered new Japanese tags. It might be ideal If we can emit a NEW_TAG event, and a particular app queues a batch job to update and deploy the dictionary.
+A possible improvement strategy is that we should continuously update the Kuromoji dictionary to add newly entered new Japanese tags. It might be ideal If we could emit a particular NEW_TAG system event when a new Tag is entered. Then, a specific app can listen to the system event and create a batch job queue to update and deploy the dictionary. The dictionary consists of several actual files, so we can distribute them using the CDN cache.
 
 ## Example code
 
@@ -96,3 +96,56 @@ Then, source the `.bashrc` if you'd like. You might want to use a terminal multi
 ```bash
 source .bashrc
 ```
+
+## How to update the Kuromoji dictionary files
+
+It's a little bit of a complicated task, so I configured a docker compose service to update the Kuromoji dictionary files. You can understand the details as follows:
+
+- [docker-compose.yaml](docker-compose.yaml)
+- [docker-entrypoint.sh](docker/kuromoji/docker-entrypoint.sh)
+
+Or you can check how it works just by running the container:
+
+```SHELLSCRIPT
+docker compose run --rm build-dict
+```
+
+### User dictionary preparation
+
+- [kuromoji.js demo](https://takuyaa.github.io/kuromoji.js/demo/tokenize.html)
+
+When adding new words to the Kuromoji dictionary, we must create a CSV file and write the phrase information aligning to a defined column layout:
+
+| A   | B     | C     | D   | E | F        | G       | H       | I   | J   | K | L  | M |
+|-----|-------|-------|-----|---|----------|---------|---------|-----|-----|---|----|---|
+|表層形|左文脈ID|右文脈ID|コスト|品詞|品詞細分類1|品詞細分類2|品詞細分類3|活用形|活用型|原形|読み|発音|
+
+The CSV file should be ***UTF-8***. Not every column is required, but you should fill out almost all columns except B to D. The required values' accuracy depends on how accurate you expect the results to be. You might be able to use the same value for columns A, K, L and M, but it compromises the result accuracy.
+
+You can see the practical example as follows. I tried to add the words `雪玉` (*snowball*) and `シャネルスーツ` (Chanel Suit) into the Kuromoji dictionary because the tokeniser didn't recognise them:
+
+- [user-dic.csv](project/config/kuromoji/user-dic.csv)
+
+You also can check how the Kuromoji tokeniser works after updating its dictionary in the following tests:
+
+- [tokenisers-japanese.test.js](project/tokenisers-japanese.test.js)
+- [tokenisers-mixed.test.js](project/tokenisers-mixed.test.js)
+- [tokenisers-snowman.test.js](project/tokenisers-snowman.test.js)
+
+### Container execution
+
+After completing the CSV preparation, you can finally run the container to update the Kuromoji dictionary. The CSV file should be placed in the following directory:
+
+> project/config/kuromoji/
+
+The container requires the location path as an environment variable, `DICT_SRC` in the [docker-compose.yaml](docker-compose.yaml):
+
+> \- DICT_SRC=/project/config/kuromoji/user-dic.csv
+
+Then, run the following commnad:
+
+```SHELLSCRIPT
+docker compose run --rm build-dict
+```
+
+After that, you will find the updated dictionary files in `project/dict`.

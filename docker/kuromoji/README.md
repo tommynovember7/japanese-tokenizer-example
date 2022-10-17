@@ -10,7 +10,7 @@
 echo $DOCKER_TOKEN | docker login -u $DOCKER_USER_NAME --password-stdin
 ```
 
-### BUild the custom image
+### Build the custom image
 
 ```shell
 docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull --push --tag tommynovember7/kuromoji-env:latest ./docker/kuromoji/
@@ -18,11 +18,17 @@ docker buildx build --platform linux/amd64,linux/arm64 --no-cache --pull --push 
 
 ## Appendix
 
-### Current Platform
+### Check current platform
 
 ```shell
 uname -m
 ```
+
+### Docker buildx
+
+- [docker buildx](https://github.com/docker/buildx#getting-started)
+
+If you're using an M1 or M2-ready computer, you might want to run `docker buildx create` first.
 
 ```shell
 $ docker buildx ls

@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-USER_DICT="/project/config/kuromoji/user-dic.csv"
-COPIED_DICT="/kuromoji/node_modules/mecab-ipadic-seed/lib/dict/user-dic.csv"
+DICT_DEST="/kuromoji/node_modules/mecab-ipadic-seed/lib/dict/user-dic.csv"
 
 if [[ $# -eq 0 ]]; then
     cd /kuromoji && \
     echo "Current: $(pwd)" && \
-    if [ ! -e $USER_DICT ];then
-        echo "User dictionary file not exists."
+    echo "SRC: ${DICT_SRC}" && \
+    if [ ! -e ${DICT_SRC} ];then
+        echo "[ERROR] User dictionary file not found."
         exit 1
     fi
-    echo "Preparing user dictionary..." && \
-    cp $USER_DICT /kuromoji/node_modules/mecab-ipadic-seed/lib/dict/ && \
-    if [ ! -e $COPIED_DICT ];then
-        echo "User dictionary file not copied."
+    echo "Preparing user dictionary source..." && \
+    cp ${DICT_SRC} /kuromoji/node_modules/mecab-ipadic-seed/lib/dict/user-dic.csv && \
+    if [ ! -e ${DICT_DEST} ];then
+        echo "[ERROR] Failed to copy the user dictionary file."
         exit 1
     fi
-    ls ${COPIED_DICT} && \
+    ls ${DICT_DEST} && \
     echo "Running 'npm run build-dict'..." && \
     /usr/local/bin/npm run build-dict && \
     echo "Copying newly generated dictionaries..." && \
