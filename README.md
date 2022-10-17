@@ -79,7 +79,7 @@ const tokens = segmenter.segment(text);
 console.log(tokens); // It shows an array of words
 ```
 
-You may find a working example in [demo.js](project/demo.js) and its test in [demo.test.js](project/demo.test.js).
+You may find a working example in [sample-kuromoji.js](project/sample-kuromoji.js) and its test in [sample-tinySegmenter.js](project/sample-tinySegmenter.js).
 
 ## Appendix
 
