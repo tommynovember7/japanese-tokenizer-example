@@ -1,9 +1,9 @@
 /**
  * @param tag
- * @param segment
+ * @param token
  * @returns {`<a href="${*}">${*}</a>`}
  */
-const createLink = (tag, segment) => `<a href="${tag[1]}">${segment}</a>`;
+const createLink = (tag, token) => `<a href="${tag[1]}">${token}</a>`;
 
 
 /**

@@ -1,7 +1,7 @@
 const fs = require('fs');
 const TinySegmenter = require('tiny-segmenter');
 const {asyncTokenizer} = require('./src/kuromoji/asyncTokenizer');
-const {markupTagNames} = require('./src/linkAugogen/markup');
+const {markupTagNames} = require('./src/linkAutogen/markup');
 
 const materialText = fs.readFileSync('./material/japanese.txt', 'utf-8');
 const tagDefinitions = [
