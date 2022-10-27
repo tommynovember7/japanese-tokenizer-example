@@ -85,13 +85,17 @@ You may find a working example in [sample-kuromoji.js](project/sample-kuromoji.j
 
 ## How to set up the project
 
-Whether you use the `.bashrc` or not is optional, so it is totally up to you, but I encourage you to give it a try to see once. If you use the `.bashrc`, run the following commands to create a dot file and edit them to fill required credentials or customise:
+Whether you use the `.bashrc` or not is optional, so it is totally up to you, but I encourage you to give it a try to see once. If you use the `.bashrc`, run the following commands to create dot files and edit the `.env` one to fill environment variables or customise:
+
+```bash
+cat .bashrc.dist > .bashrc
+```
 
 ```bash
 cat docker/.env.dist > docker/.env
 ```
 
-Then, source the `.bashrc` if you'd like. You might want to use a terminal multiplexer like [tmux](https://github.com/tmux/tmux/wiki) to avoid env vars and command alias contamination:
+Then, source the `.bashrc` if you like. You might want to use a terminal multiplexer like [tmux](https://github.com/tmux/tmux/wiki) to avoid env vars and command alias contamination:
 
 ```bash
 source .bashrc
@@ -125,6 +129,11 @@ The CSV file should be ***UTF-8***. Not every column is required, but you should
 You can see the practical example as follows. I tried to add the words `雪玉` (*snowball*) and `シャネルスーツ` (Chanel Suit) into the Kuromoji dictionary because the tokeniser didn't recognise them:
 
 - [user-dic.csv](project/config/kuromoji/user-dic.csv)
+
+| A   | B     | C     | D   | E | F        | G       | H       | I   | J   | K | L  | M |
+|-----|-------|-------|-----|---|----------|---------|---------|-----|-----|---|----|---|
+|雪玉||||名詞|\*|\*|\*|\*|\*|雪玉|ユキダマ|ユキダマ|
+|シャネルスーツ||||名詞|\*|\*|\*|\*|\*|シャネルスーツ|シャネルスーツ|シャネルスーツ|
 
 You also can check how the Kuromoji tokeniser works after updating its dictionary in the following tests:
 
